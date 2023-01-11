@@ -1,26 +1,31 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_height - gets the height of a binary tree
- * @tree: root node to draw height from for tree
- *
- * Return: size_t representing height, 0 on failure or NULL
+ * second_method - for recursion
+ * @tree: binary_tree_t
+ * Return: size_t
  */
-size_t binary_tree_height(const binary_tree_t *tree)
+size_t second_method(const binary_tree_t *tree)
 {
-	size_t left_size = 0;
-	size_t right_size = 0;
+	size_t left_height, right_height;
 
 	if (!tree)
 		return (0);
 
-	if (tree->left)
-		left_size += 1 + binary_tree_height(tree->left);
-	if (tree->right)
-		right_size += 1 + binary_tree_height(tree->right);
+	left_height = second_method(tree->left);
+	right_height = second_method(tree->right);
 
-	if (left_size > right_size)
-		return (left_size);
-	else
-		return (right_size);
+	return (1 + (left_height > right_height ? left_height : right_height));
+}
+
+/**
+ * binary_tree_height - count
+ * @tree: binary_tree_t
+ * Return: size_t
+ */
+size_t binary_tree_height(const binary_tree_t *tree)
+{
+	size_t final_result = second_method(tree);
+
+	return ((final_result == 0) ? final_result : final_result - 1);
 }

@@ -1,19 +1,35 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_depth - gets the depth of a node in abinary tree
- * @tree: root node to draw height from for tree
- *
- * Return: size_t representing height, 0 on failure or NULL
+ * second_method - for recursion
+ * @tree: binary_tree_t
+ * Return: size_t
  */
-size_t binary_tree_depth(const binary_tree_t *tree)
+size_t second_method(const binary_tree_t *tree)
 {
-	size_t depth = 0;
+	size_t result;
 
 	if (!tree)
 		return (0);
 
-	if (tree->parent)
-		depth += 1 + binary_tree_depth(tree->parent);
-	return (depth);
+	result = second_method(tree->parent);
+
+	return (result + 1);
+}
+
+/**
+ * binary_tree_depth - count
+ * @tree: binary_tree_t
+ * Return: size_t
+ */
+size_t binary_tree_depth(const binary_tree_t *tree)
+{
+	size_t result;
+
+	if (!tree)
+		return (0);
+
+	result = second_method(tree);
+
+	return (result == 0 ? result : result - 1);
 }
